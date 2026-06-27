@@ -26,7 +26,7 @@
 <body>
 
 	<section class="hero-section">
-<link rel="stylesheet" th:href="@{/css/patient_panel.css}" />
+		<link rel="stylesheet" th:href="@{/css/patient_panel.css}" />
 
 		<!-- ===== TOP NAV ===== -->
 		<header class="topbar">
@@ -96,199 +96,45 @@
 			<section class="doctor-list" id="doctorList">
 
 				<!-- Doctor card 1 -->
-				<article class="doctor-card" data-doctor-id="neha-sharma"
-					data-name="Dr. Neha Sharma" data-spec="Cardiologist"
-					data-availability="today">
-					<div class="doctor-card-row" data-toggle="expand">
-						<div class="doctor-identity">
-							<span class="avatar-md">NS</span>
-							<div class="doctor-info">
-								<h2 class="doctor-name">Dr. Neha Sharma</h2>
-								<p class="doctor-meta">Cardiologist &middot; 8 yrs exp
-									&middot; AIIMS Delhi</p>
-								<span class="availability-pill availability-pill--today">
-									<span class="dot dot--live"></span> Available today, 3 slots
-								</span>
-							</div>
-						</div>
-						<button class="btn btn-view-book" type="button">
-							View &amp; Book <i class="bi bi-chevron-down"></i>
-						</button>
-					</div>
+				<section class="doctor-list" id="doctorList">
 
-					<!-- Expanded slot picker -->
-					<div class="slot-picker" id="picker-neha-sharma">
-						<div class="slot-picker-inner">
+					<article class="doctor-card" th:each="doctor : ${doctors}"
+						th:attr="data-doctor-id=${doctor.id}, data-name=${doctor.name}, data-spec=${doctor.department}">
 
-							<div class="slot-day-group">
-								<div class="slot-day-label">Mon, 22 Jun</div>
-								<div class="slot-options" data-doctor="neha-sharma">
-									<button class="slot-btn" type="button"
-										data-time="Mon 22 Jun · 10:00 AM">10:00 AM</button>
-									<button class="slot-btn" type="button"
-										data-time="Mon 22 Jun · 11:30 AM">11:30 AM</button>
-									<button class="slot-btn" type="button"
-										data-time="Mon 22 Jun · 2:00 PM">2:00 PM</button>
-									<button class="slot-btn slot-btn--taken" type="button" disabled
-										title="Already booked">
-										<i class="bi bi-x-lg"></i>
-									</button>
+						<div class="doctor-card-row" data-toggle="expand">
+							<div class="doctor-identity">
+								<span class="avatar-md"
+									th:text="${#strings.substring(doctor.name,0,2)}">NS</span>
+								<div class="doctor-info">
+									<h2 class="doctor-name" th:text="${doctor.name}">Dr. Neha
+										Sharma</h2>
+									<p class="doctor-meta">
+										<span th:text="${doctor.department}">Cardiologist</span>
+										&middot; <span th:text="${doctor.experience} + ' yrs exp'">8
+											yrs exp</span> &middot; <span th:text="${doctor.hospital}">AIIMS
+											Delhi</span>
+									</p>
+									<span class="availability-pill availability-pill--today">
+										<span class="dot dot--live"></span> Available today
+									</span>
 								</div>
 							</div>
-
-							<div class="slot-day-group">
-								<div class="slot-day-label">Tue, 23 Jun</div>
-								<div class="slot-options" data-doctor="neha-sharma">
-									<button class="slot-btn" type="button"
-										data-time="Tue 23 Jun · 9:30 AM">9:30 AM</button>
-									<button class="slot-btn" type="button"
-										data-time="Tue 23 Jun · 4:00 PM">4:00 PM</button>
-								</div>
-							</div>
-
-							<div class="reason-block">
-								<label for="reason-neha-sharma" class="reason-label">Reason
-									for visit (optional)</label> <input type="text"
-									class="form-control reason-input" id="reason-neha-sharma"
-									placeholder="e.g. Chest pain follow-up">
-							</div>
-
-							<div class="slot-picker-footer">
-								<span class="selected-slot-note" id="selectedNote-neha-sharma">Pick
-									a slot to continue</span>
-								<button class="btn btn-confirm-booking" type="button"
-									id="confirmBtn-neha-sharma" disabled>
-									<i class="bi bi-calendar2-check"></i> Confirm Booking
-								</button>
-							</div>
-
-							<p class="pending-note">
-								<i class="bi bi-info-circle"></i> Booking creates a <strong>pending
-									request</strong> &mdash; the doctor must accept to confirm.
-							</p>
+							<button class="btn btn-view-book" type="button">
+								View &amp; Book <i class="bi bi-chevron-down"></i>
+							</button>
 						</div>
-					</div>
-				</article>
 
-				<!-- Doctor card 2 -->
-				<article class="doctor-card" data-doctor-id="rohit-verma"
-					data-name="Dr. Rohit Verma" data-spec="Orthopedic"
-					data-availability="week">
-					<div class="doctor-card-row" data-toggle="expand">
-						<div class="doctor-identity">
-							<span class="avatar-md avatar-md--muted">RV</span>
-							<div class="doctor-info">
-								<h2 class="doctor-name">Dr. Rohit Verma</h2>
-								<p class="doctor-meta">Orthopedic &middot; 12 yrs exp
-									&middot; Max Hospital</p>
-								<span class="availability-pill availability-pill--later">
-									<span class="dot dot--later"></span> Next available: Tomorrow
-								</span>
+						<!-- Slot picker abhi static rakh rahe â€” baad mein dynamic karenge -->
+						<div class="slot-picker">
+							<div class="slot-picker-inner">
+								<p class="pending-note">
+									<i class="bi bi-info-circle"></i> Slot booking coming soon.
+								</p>
 							</div>
 						</div>
-						<button class="btn btn-view-book" type="button">
-							View &amp; Book <i class="bi bi-chevron-down"></i>
-						</button>
-					</div>
+					</article>
 
-					<div class="slot-picker" id="picker-rohit-verma">
-						<div class="slot-picker-inner">
-
-							<div class="slot-day-group">
-								<div class="slot-day-label">Tue, 23 Jun</div>
-								<div class="slot-options" data-doctor="rohit-verma">
-									<button class="slot-btn" type="button"
-										data-time="Tue 23 Jun · 10:00 AM">10:00 AM</button>
-									<button class="slot-btn" type="button"
-										data-time="Tue 23 Jun · 12:30 PM">12:30 PM</button>
-									<button class="slot-btn" type="button"
-										data-time="Tue 23 Jun · 5:00 PM">5:00 PM</button>
-								</div>
-							</div>
-
-							<div class="reason-block">
-								<label for="reason-rohit-verma" class="reason-label">Reason
-									for visit (optional)</label> <input type="text"
-									class="form-control reason-input" id="reason-rohit-verma"
-									placeholder="e.g. Knee pain, 2 weeks">
-							</div>
-
-							<div class="slot-picker-footer">
-								<span class="selected-slot-note" id="selectedNote-rohit-verma">Pick
-									a slot to continue</span>
-								<button class="btn btn-confirm-booking" type="button"
-									id="confirmBtn-rohit-verma" disabled>
-									<i class="bi bi-calendar2-check"></i> Confirm Booking
-								</button>
-							</div>
-
-							<p class="pending-note">
-								<i class="bi bi-info-circle"></i> Booking creates a <strong>pending
-									request</strong> &mdash; the doctor must accept to confirm.
-							</p>
-						</div>
-					</div>
-				</article>
-
-				<!-- Doctor card 3 -->
-				<article class="doctor-card" data-doctor-id="sana-iqbal"
-					data-name="Dr. Sana Iqbal" data-spec="Dermatologist"
-					data-availability="today">
-					<div class="doctor-card-row" data-toggle="expand">
-						<div class="doctor-identity">
-							<span class="avatar-md">SI</span>
-							<div class="doctor-info">
-								<h2 class="doctor-name">Dr. Sana Iqbal</h2>
-								<p class="doctor-meta">Dermatologist &middot; 6 yrs exp
-									&middot; Fortis Hospital</p>
-								<span class="availability-pill availability-pill--today">
-									<span class="dot dot--live"></span> Available today, 5 slots
-								</span>
-							</div>
-						</div>
-						<button class="btn btn-view-book" type="button">
-							View &amp; Book <i class="bi bi-chevron-down"></i>
-						</button>
-					</div>
-
-					<div class="slot-picker" id="picker-sana-iqbal">
-						<div class="slot-picker-inner">
-
-							<div class="slot-day-group">
-								<div class="slot-day-label">Mon, 22 Jun</div>
-								<div class="slot-options" data-doctor="sana-iqbal">
-									<button class="slot-btn" type="button"
-										data-time="Mon 22 Jun · 1:00 PM">1:00 PM</button>
-									<button class="slot-btn" type="button"
-										data-time="Mon 22 Jun · 3:30 PM">3:30 PM</button>
-									<button class="slot-btn" type="button"
-										data-time="Mon 22 Jun · 5:00 PM">5:00 PM</button>
-								</div>
-							</div>
-
-							<div class="reason-block">
-								<label for="reason-sana-iqbal" class="reason-label">Reason
-									for visit (optional)</label> <input type="text"
-									class="form-control reason-input" id="reason-sana-iqbal"
-									placeholder="e.g. Skin allergy consult">
-							</div>
-
-							<div class="slot-picker-footer">
-								<span class="selected-slot-note" id="selectedNote-sana-iqbal">Pick
-									a slot to continue</span>
-								<button class="btn btn-confirm-booking" type="button"
-									id="confirmBtn-sana-iqbal" disabled>
-									<i class="bi bi-calendar2-check"></i> Confirm Booking
-								</button>
-							</div>
-
-							<p class="pending-note">
-								<i class="bi bi-info-circle"></i> Booking creates a <strong>pending
-									request</strong> &mdash; the doctor must accept to confirm.
-							</p>
-						</div>
-					</div>
-				</article>
+				</section>
 
 			</section>
 

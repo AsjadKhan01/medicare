@@ -1,21 +1,40 @@
 package com.medicare.entities;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+@Entity
 public class Doctor {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	@Column(unique = true)
+	private String email;
+	private String password;
+	private String role;
+	
 	private String name;
 	private String department;
 	private int experience;
 	private String hospital;
-	private String email;
-	private String password;
-	private String role;
 	private String about;
 	private String status;
+	
 	private ArrayList<String> slots;
-	private Patient patients;
+	@OneToMany(mappedBy = "doctor")
+	private List<Patient> patients;
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -82,18 +101,14 @@ public class Doctor {
 	public void setSlots(ArrayList<String> slots) {
 		this.slots = slots;
 	}
-	public Patient getPatients() {
+	public List<Patient> getPatients() {
 		return patients;
 	}
-	public void setPatients(Patient patients) {
+	public void setPatients(List<Patient> patients) {
 		this.patients = patients;
 	}
-	@Override
-	public String toString() {
-		return "Doctor [id=" + id + ", name=" + name + ", department=" + department + ", experience=" + experience
-				+ ", hospital=" + hospital + ", email=" + email + ", password=" + password + ", role=" + role
-				+ ", about=" + about + ", status=" + status + ", slots=" + slots + ", patients=" + patients + "]";
-	}
+
+	
 	
 	
 }

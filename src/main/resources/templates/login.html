@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<section>
+
+    <div class="container" style="max-width: 400px; margin-top: 100px;">
+        <h2 class="text-center mb-4">MediCare Login</h2>
+
+        <!-- Agar login fail hua tha, error dikhana -->
+        
+        <div th:if="${param.error}" class="alert alert-danger">
+            Invalid email or password
+        </div>
+
+        <!-- Agar logout successful hua tha -->
+        <div th:if="${param.logout}" class="alert alert-success">
+            You have been logged out
+        </div>
+
+        <form th:action="@{/login}" method="post">
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="text" name="username" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+    </div>
+	</section>
+
+
+</body>
+</html>
+
+
