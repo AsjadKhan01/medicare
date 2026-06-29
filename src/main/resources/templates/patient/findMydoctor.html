@@ -49,13 +49,13 @@
 				<!-- Doctor card 1 -->
 				<section class="doctor-list" id="doctorList">
 
-					<article class="doctor-card" th:each="doctor : ${doctors}"
+					<article class="doctor-card" th:each="doctor: ${doctors}"
 						th:attr="data-doctor-id=${doctor.id}, data-name=${doctor.name}, data-spec=${doctor.department}">
 
 						<div class="doctor-card-row" data-toggle="expand">
 							<div class="doctor-identity">
 								<span class="avatar-md"
-									th:text="${#strings.substring(doctor.name,0,2)}">NS</span>
+									th:text="${#strings.substring(doctor.name,4,6)}">NS</span>
 								<div class="doctor-info">
 									<h2 class="doctor-name" th:text="${doctor.name}">Dr. Neha
 										Sharma</h2>
@@ -76,7 +76,7 @@
 						</div>
 
 						<!-- Slot picker abhi static rakh rahe — baad mein dynamic karenge -->
-						
+
 						<div class="slot-picker" th:id="'picker-' + ${doctor.id}">
 							<div class="slot-picker-inner">
 
@@ -90,34 +90,31 @@
 								<div
 									th:unless="${doctor.slots == null or doctor.slots.isEmpty()}">
 
-									<div class="slot-day-group" th:each="slot : ${doctor.slots}"
-										th:if="${slot.status == 'AVAILABLE'}">
-										<div class="slot-day-label" th:text="${slot.date}">Mon,
-											22 Jun</div>
-										<div class="slot-options" th:attr="data-doctor=${doctor.id}">
-											<button class="slot-btn" type="button"
-												th:attr="data-time=${slot.date} + ' ' + ${slot.time}, data-slot-id=${slot.id}"
-												th:text="${slot.time}">10:00 AM</button>
+									<p class="slot-row-label">Available slots</p>
+
+									<form th:action="@{/patient/bookSlot}" method="post"
+										class="slot-booking-form">
+
+										<input type="hidden" name="doctorId" th:value="${doctor.id}">
+
+										<div class="slot-chip-row" th:attr="data-doctor=${doctor.id}">
+											<label class="slot-chip" th:each="slot : ${doctor.slots}">
+												<input type="radio" name="slotId" th:value="${slot.id}"
+												class="slot-chip-input" required> 
+												<span
+												th:text="${#temporals.format(slot.date, 'EEE dd')} + ' · ' + ${slot.time}">Mon 29 · 10:00</span>
+											</label>
 										</div>
-									</div>
 
-									<div class="reason-block">
-										<label class="reason-label" th:for="'reason-' + ${doctor.id}">Reason
-											for visit (optional)</label> <input type="text"
-											class="form-control reason-input"
-											th:id="'reason-' + ${doctor.id}"
-											placeholder="e.g. Chest pain follow-up">
-									</div>
-
-									<div class="slot-picker-footer">
-										<span class="selected-slot-note"
-											th:id="'selectedNote-' + ${doctor.id}">Pick a slot to
-											continue</span>
-										<button class="btn btn-confirm-booking" type="button"
-											th:id="'confirmBtn-' + ${doctor.id}" disabled>
-											<i class="bi bi-calendar2-check"></i> Confirm Booking
-										</button>
-									</div>
+										<div class="slot-booking-footer">
+											<input type="text" name="reason"
+												class="form-control reason-input"
+												placeholder="Reason for visit (optional)">
+											<button type="submit" class="btn btn-confirm-booking">
+												<i class="bi bi-calendar2-check"></i> Confirm Booking
+											</button>
+										</div>
+									</form>
 
 									<p class="pending-note">
 										<i class="bi bi-info-circle"></i> Booking creates a <strong>pending

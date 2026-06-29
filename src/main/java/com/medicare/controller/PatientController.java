@@ -48,27 +48,32 @@ public class PatientController {
 		return "redirect:/patient/findMyDoctor";
 	}
 
+	@PostMapping("/bookSlot")
+	public String bookSlot(@RequestParam("doctorId") String doctorId, @RequestParam("slotId") String slotId,
+			@RequestParam("reason") String reason, Model m, Principal principal) {
+		System.err.println(doctorId);
+		System.err.println(slotId);
+		System.err.println(reason);
+		return "redirect:/patient/findMyDoctor";
+	}
+
 	@GetMapping("/findMyDoctor")
 	public String findDoctor(Model m, Principal principal) throws NullPointerException {
 		List<Doctor> doctors = doctorRepo.findAll();
 
-		List<Doctor> findAllDoctors = this.doctorRepo.findAll();
-		// Har doctor ke available slots ko date-wise group karna
-		Map<Integer, List<Slot>> doctorSlotMap = new HashMap<>();
-		for (Doctor doctor : findAllDoctors) {
-			List<Slot> availableSlots = this.slotRepo
+		// Har doctor ke sirf upcoming + available slots filter karna
+		for (Doctor doctor : doctors) {
+			List<Slot> filteredSlots = slotRepo
 					.findByDoctorIdAndDateGreaterThanEqualOrderByDateAscTimeAsc(doctor.getId(), LocalDate.now());
-			// availableSlots.removeIf(slot -> !slot.getStatus().equals("AVAILABLE"));
-			doctorSlotMap.put(doctor.getId(), availableSlots);
+			filteredSlots.removeIf(slot -> !slot.getStatus().equals("AVAILABLE"));
+			doctor.setSlots(filteredSlots); // doctor object ke slots ko replace kar diya
 		}
-		//m.addAttribute("doctorSlotMap", doctorSlotMap);
-		m.addAttribute("loginUsername", this.patientRepo.findByEmail(principal.getName()).getName());
-		//m.addAttribute("doctor", this.doctorRepo.findByEmail(principal.getName()));
+
 		m.addAttribute("doctors", doctors);
 		m.addAttribute("activePage", "findMyDoctor");
 		m.addAttribute("title", "MediCare Patient");
+		m.addAttribute("loginUsername", this.patientRepo.findByEmail(principal.getName()).getName());
 
-		System.out.println("MediCare Patient");
 		return "/patient/findMyDoctor";
 	}
 
