@@ -31,7 +31,7 @@ public class CustomAuthSuccessHandler implements AuthenticationSuccessHandler {
                 response.sendRedirect("/doctor");
                 return;
             } else if (role.equals("ROLE_PATIENT")) {
-                response.sendRedirect("/patient");
+                response.sendRedirect("/patient/findMyDoctor");
                 return;
             }
         }

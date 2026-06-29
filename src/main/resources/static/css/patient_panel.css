@@ -542,3 +542,184 @@ a:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
 }
+
+
+/* ===========================================================
+   MY APPOINTMENTS — Patient view
+   Reuses the same design tokens, new unique class names
+   =========================================================== */
+
+.appointment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.appointment-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 1.1rem 1.35rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.appointment-identity {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+}
+
+.appointment-doctor-name {
+  font-size: 1.02rem;
+  font-weight: 700;
+  margin: 0 0 0.15rem;
+}
+
+.appointment-doctor-meta {
+  font-size: 0.84rem;
+  color: var(--ink-soft);
+  margin: 0 0 0.4rem;
+}
+
+.appointment-time {
+  font-size: 0.84rem;
+  color: var(--ink);
+  margin: 0 0 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.appointment-time i { color: var(--teal); font-size: 0.8rem; }
+
+.appointment-reason {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* Status pills — reuses availability-pill tokens but with own names */
+.appt-status-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.appt-status-pill--pending { background: var(--amber-tint); color: var(--amber); }
+.appt-status-pill--confirmed { background: var(--green-tint); color: var(--green); }
+.appt-status-pill--rejected { background: var(--red-tint); color: var(--red); }
+
+@media (max-width: 767.98px) {
+  .appointment-card { flex-direction: column; align-items: stretch; }
+  .appt-status-pill { align-self: flex-start; }
+}
+
+
+/* ===========================================================
+   SIGNUP — Patient registration
+   Reuses the same design tokens
+   =========================================================== */
+
+.signup-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: var(--bg);
+}
+
+.signup-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 2.25rem 2rem;
+  max-width: 420px;
+  width: 100%;
+}
+
+.signup-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.signup-header .brand-mark {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--teal);
+  color: #fff;
+  display: inline-grid;
+  place-items: center;
+  font-size: 1.3rem;
+  margin-bottom: 0.75rem;
+}
+
+.signup-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+  color: var(--ink);
+}
+
+.signup-sub {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.signup-card .form-row {
+  margin-bottom: 0.9rem;
+}
+
+.signup-card .form-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.signup-card .form-control {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  padding: 0.6rem 0.85rem;
+}
+.signup-card .form-control:focus {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px var(--teal-tint);
+}
+
+.btn-signup {
+  background: var(--teal);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 0.65rem;
+  border-radius: var(--radius-sm);
+  border: none;
+}
+.btn-signup:hover { background: var(--teal-dark); color: #fff; }
+
+.signup-footer {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin-top: 1.25rem;
+}
+.signup-footer a {
+  color: var(--teal-dark);
+  font-weight: 600;
+}

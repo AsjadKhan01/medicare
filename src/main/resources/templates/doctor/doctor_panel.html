@@ -98,17 +98,59 @@
 				<!-- Manage Availability -->
 				<div class="col-12 col-lg-6">
 					<div class="panel1 h-100">
-						<div class="panel-head ">
-							<div>
-								<h2 class="panel-title " ; style="color: green">Manage
-									Availability</h2>
-								<p class="panel-sub">Set recurring weekly slots, or add
-									one-off dates</p>
-							</div>
-						</div>
+						
+							<div class="panel">
+								<div class="panel-head">
+									<h2 class="panel-title" style="color: green">
+										<i class="bi bi-calendar-plus" ></i> Add Available Slot
+									</h2>
+								</div>
 
-						<div class="panel-body ">
-							<div class="avail-list" id="availList">
+								<div class="panel-body">
+									<form th:action="@{/doctor/addSlot}" method="post">
+										<div style="display: flex; gap: 50px;">
+											<div class="style=flex:1;">
+												<label class="form-label" style="color:green">Date</label> <input type="date" 
+													name="date" class="form-control btn-complete" required>
+											</div>
+											 <div class="style= flex:1;">
+												<label class="form-label" style="color: green">Time</label> <input type="time"
+													name="time" class="form-control btn-complete" required>
+											 </div> 
+										</div>
+										<button type="submit" style="color: green ;" class="btn btn-complete  w-10 mt-3">
+											<i class="bi bi-plus-lg"></i> Add Slot
+										</button>
+							
+									</form>
+
+									<div class="mt-4"
+										style="border-top: 1px solid #eee; padding-top: 1rem;">
+										<p class="panel-sub mb-2">Upcoming slots</p>
+
+										<div class="d-flex flex-column gap-2">
+											<div th:each="slot : ${slots}"
+												class="d-flex align-items-center justify-content-between p-2 px-3 btn-complete"
+												style="background: #f8f9fa; border-radius: 8px;">
+
+												<div class="d-flex align-items-center gap-2 btn-complet">
+													<i class="bi bi-clock"></i> <span
+														th:text="${slot.date} + ' · ' + ${slot.time}">Mon,
+														29 Jun · 10:00 AM</span>
+												</div>
+
+												<span th:if="${slot.status == 'AVAILABLE'}"
+													class="status-pill status-pill--confirm">Available</span> <span
+													th:if="${slot.status == 'BOOKED'}"
+													class="status-pill status-pill--pending">Booked</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							<!-- <div class="avail-list" id="availList">
 
 								<div class="avail-row" data-day="Mon">
 									<div class="avail-day">Mon</div>
@@ -155,7 +197,7 @@
 									id="saveScheduleBtn" type="button">
 									<i class="bi bi-check2"></i> Save Schedule
 								</button>
-							</div>
+							</div>-->
 						</div>
 					</div>
 				</div>

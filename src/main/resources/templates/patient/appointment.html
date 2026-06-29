@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="patient/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insert title here</title>
+
+</head>
+<body>
+	<section class="hero-section">
+		<main class="container-fluid main-wrap">
+
+			<div class="page-heading-row">
+				<h1 class="page-heading">My Appointments</h1>
+				<p class="page-sub">Track your upcoming and past visits</p>
+			</div>
+
+			<div class="appointment-list">
+
+				<div class="appointment-card">
+					<div class="appointment-left">
+						
+						<div>
+							<h3 class="appointment-doctor">
+							<span class="avatar-md">NS</span>
+							Dr. Neha Sharma</h3>
+							<p class="appointment-meta">Cardiologist &middot; AIIMS Delhi</p>
+							<p class="appointment-time">
+								<i class="bi bi-calendar3"></i> Mon, 29 Jun &middot; 10:00 AM
+							</p>
+							<p class="appointment-reason">Reason: Chest pain follow-up</p>
+						</div>
+					</div>
+					<span class="status-pill status-pill--pending">Pending</span>
+				</div>
+
+			</div>
+
+			<div class="empty-state d-none" id="noAppointmentsState">
+				<i class="bi bi-calendar-x"></i>
+				<p>You have no appointments yet.</p>
+			</div>
+
+		</main>
+
+	</section>
+	</section>
+</body>

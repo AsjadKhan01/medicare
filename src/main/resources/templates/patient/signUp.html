@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="patient/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up - MediCare</title>
+
+</head>
+<body>
+
+	<section class="signup-section">
+		<div class="signup-card">
+
+			<div class="signup-header">
+				<span class="brand-mark"><i class="bi bi-heart-pulse-fill"></i></span>
+				<h1 class="signup-title">Create your account</h1>
+				<p class="signup-sub">Book appointments with trusted doctors</p>
+			</div>
+
+			<!-- Error message if registration fails -->
+			<div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+			<form th:action="@{/register}" method="post">
+
+				<div class="form-row">
+					<label class="form-label">Full name</label> <input type="text"
+						name="name" class="form-control" placeholder="Asjad Khan" required>
+				</div>
+
+				<div class="form-row">
+					<label class="form-label">Email</label> <input type="email"
+						name="email" class="form-control" placeholder="name@email.com"
+						required>
+				</div>
+
+				<div class="form-row">
+					<label class="form-label">Password</label> <input type="password"
+						name="password" class="form-control"
+						placeholder="Create a password" required>
+				</div>
+
+				<button type="submit" class="btn btn-signup w-100 mt-2">
+					Create account</button>
+
+			</form>
+
+			<p class="signup-footer">
+				Already have an account? <a th:href="@{/login}">Log in</a>
+			</p>
+
+		</div>
+
+	</section>
+</body>
+</html>

@@ -30,7 +30,9 @@ public class Doctor {
 	private String about;
 	private String status;
 	
-	private ArrayList<String> slots;
+	@OneToMany(mappedBy = "doctor")
+	private List<Slot> slots;
+	
 	@OneToMany(mappedBy = "doctor")
 	private List<Patient> patients;
 	
@@ -95,20 +97,18 @@ public class Doctor {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public ArrayList<String> getSlots() {
-		return slots;
-	}
-	public void setSlots(ArrayList<String> slots) {
-		this.slots = slots;
-	}
+
 	public List<Patient> getPatients() {
 		return patients;
 	}
 	public void setPatients(List<Patient> patients) {
 		this.patients = patients;
 	}
-
-	
-	
+	public List<Slot> getSlots() {
+		return slots;
+	}
+	public void setSlots(List<Slot> slots) {
+		this.slots = slots;
+	}
 	
 }

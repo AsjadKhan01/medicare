@@ -72,15 +72,15 @@ public class Patient {
 		this.doctor = doctor;
 	}
 
-	public Patient(int id, String name, String email, String password, String role, Doctor doctor) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.password = password;
-		this.role = role;
-		this.doctor = doctor;
-	}
+//	public Patient(int id, String name, String email, String password, String role, Doctor doctor) {
+//		super();
+//		this.id = id;
+//		this.name = name;
+//		this.email = email;
+//		this.password = password;
+//		this.role = role;
+//		this.doctor = doctor;
+//	}
 
 	@Override
 	public String toString() {

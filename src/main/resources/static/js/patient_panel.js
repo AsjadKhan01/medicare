@@ -1,4 +1,4 @@
-// =========================================================
+/*// =========================================================
 // MediCare — Find a Doctor (Patient view) — interactions
 // =========================================================
 
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initClearFilters();
 });
 
-/* ---------- Expand / collapse doctor card ---------- */
+ ---------- Expand / collapse doctor card ---------- 
 function initExpandCollapse() {
   const cards = document.querySelectorAll('.doctor-card');
 
@@ -49,7 +49,7 @@ function collapseCard(card) {
   if (picker) picker.style.maxHeight = '0px';
 }
 
-/* ---------- Slot selection ---------- */
+ ---------- Slot selection ---------- 
 function initSlotSelection() {
   document.querySelectorAll('.slot-options').forEach((group) => {
     const doctorId = group.dataset.doctor;
@@ -75,7 +75,7 @@ function initSlotSelection() {
   });
 }
 
-/* ---------- Confirm booking ---------- */
+ ---------- Confirm booking ---------- 
 function initConfirmBooking() {
   document.querySelectorAll('.btn-confirm-booking').forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -115,7 +115,7 @@ function initConfirmBooking() {
   });
 }
 
-/* ---------- Search + filters ---------- */
+ ---------- Search + filters ---------- 
 function initSearchAndFilters() {
   const searchInput = document.getElementById('searchInput');
   const specFilter = document.getElementById('specializationFilter');
@@ -154,7 +154,7 @@ function applyFilters() {
   if (emptyState) emptyState.classList.toggle('d-none', visibleCount !== 0);
 }
 
-/* ---------- Clear filters ---------- */
+ ---------- Clear filters ---------- 
 function initClearFilters() {
   const clearBtn = document.getElementById('clearFiltersBtn');
   if (!clearBtn) return;
@@ -172,7 +172,7 @@ function initClearFilters() {
   });
 }
 
-/* ---------- Toasts ---------- */
+ ---------- Toasts ---------- 
 function showToast(message, type = 'success') {
   const stack = document.getElementById('toastStack');
   if (!stack) return;
@@ -188,4 +188,51 @@ function showToast(message, type = 'success') {
     toast.classList.add('toast--out');
     setTimeout(() => toast.remove(), 200);
   }, 3200);
+}*/
+
+// =========================================================
+// MediCare — Find a Doctor (Patient view)
+// Sirf doctor card expand/collapse ka kaam
+// =========================================================
+
+document.addEventListener('DOMContentLoaded', () => {
+  initExpandCollapse();
+});
+
+function initExpandCollapse() {
+  const cards = document.querySelectorAll('.doctor-card');
+
+  cards.forEach((card) => {
+    const row = card.querySelector('[data-toggle="expand"]');
+    const picker = card.querySelector('.slot-picker');
+    if (!row || !picker) return;
+
+    row.addEventListener('click', () => {
+      const isExpanded = card.classList.contains('is-expanded');
+
+      // Doosra khula card band kar do (ek time pe ek hi khula rahe)
+      cards.forEach((other) => {
+        if (other !== card && other.classList.contains('is-expanded')) {
+          collapseCard(other);
+        }
+      });
+
+      if (isExpanded) {
+        collapseCard(card);
+      } else {
+        expandCard(card, picker);
+      }
+    });
+  });
+}
+
+function expandCard(card, picker) {
+  card.classList.add('is-expanded');
+  picker.style.maxHeight = picker.scrollHeight + 'px';
+}
+
+function collapseCard(card) {
+  const picker = card.querySelector('.slot-picker');
+  card.classList.remove('is-expanded');
+  if (picker) picker.style.maxHeight = '0px';
 }
