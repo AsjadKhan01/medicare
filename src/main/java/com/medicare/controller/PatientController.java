@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.standard.expression.Each;
 
+import com.medicare.entities.Appointment;
 import com.medicare.entities.Doctor;
 import com.medicare.entities.Patient;
 import com.medicare.entities.Slot;
+import com.medicare.repository.AppointmentRepo;
 import com.medicare.repository.DoctorRepo;
 import com.medicare.repository.PatientRepo;
 import com.medicare.repository.SlotRepo;
@@ -33,10 +36,11 @@ public class PatientController {
 	private PatientRepo patientRepo;
 	@Autowired
 	private SlotRepo slotRepo;
-	private Patient patient;
+	@Autowired
+	private AppointmentRepo appointmentRepo;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
+//	private Patient patient;
 	Principal principal;
 
 	@GetMapping("/")
@@ -49,11 +53,27 @@ public class PatientController {
 	}
 
 	@PostMapping("/bookSlot")
-	public String bookSlot(@RequestParam("doctorId") String doctorId, @RequestParam("slotId") String slotId,
+	public String bookSlot(@RequestParam("doctorId") int doctorId, @RequestParam("slotId") int slotId,
 			@RequestParam("reason") String reason, Model m, Principal principal) {
-		System.err.println(doctorId);
-		System.err.println(slotId);
-		System.err.println(reason);
+		String name = principal.getName();
+
+		Patient patient = this.patientRepo.findByEmail(name);
+		Doctor doctor = this.doctorRepo.findById(doctorId);
+		Slot slot = this.slotRepo.findById(slotId);
+		if (slot == null || !slot.getStatus().equals("AVAILABLE")) {
+			return "redirect:/patient/findMyDoctor?error=slotUnavailable";
+		}
+		//slot ka status PENDING karna hai yha
+		slot.setStatus("PENDING");
+		Appointment appointment = new Appointment();
+		appointment.setPatient(patient);
+		appointment.setDoctor(doctor);
+		appointment.setSlot(slot);
+		appointment.setReason(reason);
+		appointment.setStatus("PENDING");
+		appointment.setAction("NON-COMPLETE");
+		this.appointmentRepo.save(appointment);
+
 		return "redirect:/patient/findMyDoctor";
 	}
 
@@ -79,6 +99,16 @@ public class PatientController {
 
 	@GetMapping("/appointment")
 	public String appointment(Model m, Principal principal) {
+
+		// Sabse pehle mujhe Doctor ki id chahiye
+
+		String name = principal.getName();
+		Patient patient = this.patientRepo.findByEmail(name);
+
+		List<Appointment> appointments = this.appointmentRepo.findByPatient(patient);
+
+		System.err.println("patientId : ");
+		m.addAttribute("appointments", appointments);
 		m.addAttribute("title", "appointment");
 		m.addAttribute("activePage", "appointment");
 		m.addAttribute("loginUsername", this.patientRepo.findByEmail(principal.getName()).getName());

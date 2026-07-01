@@ -19,21 +19,22 @@
 
 			<div class="appointment-list">
 
-				<div class="appointment-card">
+				<div class="appointment-card" th:each="app : ${appointments}">
 					<div class="appointment-left">
-						
 						<div>
 							<h3 class="appointment-doctor">
-							<span class="avatar-md">NS</span>
-							Dr. Neha Sharma</h3>
-							<p class="appointment-meta">Cardiologist &middot; AIIMS Delhi</p>
-							<p class="appointment-time">
-								<i class="bi bi-calendar3"></i> Mon, 29 Jun &middot; 10:00 AM
+								<span class="avatar-md"
+									th:text="${#strings.substring(app.doctor.name,4,6)}">NS</span>
+								<span th:text="${app.doctor.name}">Dr. Neha Sharma</span>
+							</h3>
+							<p class="appointment-meta" th:text="${app.doctor.department}+' '+ &middot;+' '+${app.doctor.hospital}">Cardiologist &middot; AIIMS Delhi</p>
+							<p class="appointment-time" th:text="${#temporals.format(app.slot.date, 'EEE dd')} + '  '+&middot; +'  '+ ${app.slot.time}">
+								<i class="bi bi-calendar3" ></i> Mon, 29 Jun &middot; 10:00 AM
 							</p>
-							<p class="appointment-reason">Reason: Chest pain follow-up</p>
+							<p class="appointment-reason" th:text="'Reason :  '+${app.reason}">Reason: Chest pain follow-up</p>
 						</div>
 					</div>
-					<span class="status-pill status-pill--pending">Pending</span>
+					<span class="status-pill availability-pill status-pill--pending" th:text="${app.status}">Pending</span>
 				</div>
 
 			</div>
@@ -45,6 +46,5 @@
 
 		</main>
 
-	</section>
 	</section>
 </body>

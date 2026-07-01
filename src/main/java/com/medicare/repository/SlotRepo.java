@@ -9,6 +9,6 @@ import com.medicare.entities.Slot;
 
 public interface SlotRepo extends JpaRepository<Slot, Integer> {
     List<Slot> findByDoctorId(int doctorId);
-    
+    Slot findById(int id);
     List<Slot> findByDoctorIdAndDateGreaterThanEqualOrderByDateAscTimeAsc(int doctorId, LocalDate date);
 }
